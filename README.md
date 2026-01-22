@@ -29,26 +29,22 @@ See [:help cybu.nvim](https://github.com/ghillb/cybu.nvim/blob/main/doc/cybu.nvi
 
 ## Installation
 
-### Quickstart with [packer](https://github.com/wbthomason/packer.nvim)
+### Quickstart with [lazy.nvim](https://github.com/folke/lazy.nvim)
 
 ```lua
-use({
+{
   "ghillb/cybu.nvim",
   branch = "main", -- timely updates
   -- branch = "v1.x", -- won't receive breaking changes
-  requires = { "nvim-tree/nvim-web-devicons", "nvim-lua/plenary.nvim"}, -- optional for icon support
-  config = function()
-    local ok, cybu = pcall(require, "cybu")
-    if not ok then
-      return
-    end
-    cybu.setup()
-    vim.keymap.set("n", "K", "<Plug>(CybuPrev)")
-    vim.keymap.set("n", "J", "<Plug>(CybuNext)")
-    vim.keymap.set({"n", "v"}, "<c-s-tab>", "<plug>(CybuLastusedPrev)")
-    vim.keymap.set({"n", "v"}, "<c-tab>", "<plug>(CybuLastusedNext)")
-  end,
-})
+  dependencies = { "nvim-tree/nvim-web-devicons", "nvim-lua/plenary.nvim" }, -- optional for icon support
+  keys = {
+    { "K", "<Plug>(CybuPrev)", mode = "n", desc = "Cybu Prev" },
+    { "J", "<Plug>(CybuNext)", mode = "n", desc = "Cybu Next" },
+    { "<c-s-tab>", "<plug>(CybuLastusedPrev)", mode = { "n", "v" }, desc = "Cybu Last Used Prev" },
+    { "<c-tab>", "<plug>(CybuLastusedNext)", mode = { "n", "v" }, desc = "Cybu Last Used Next" },
+  },
+  opts = {}, -- automatically calls require("cybu").setup()
+}
 ```
 
 After installing, cycle buffers and display the context window by using the exemplary key bindings defined above.
